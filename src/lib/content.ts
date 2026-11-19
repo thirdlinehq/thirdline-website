@@ -1,21 +1,197 @@
 export type WaitlistRole = "founder" | "mentor";
 
-export const examples = [
-  { problem: "Crack sales", mentor: "Book a mentor who landed their first 50 customers." },
-  { problem: "Raise your first round", mentor: "Book a mentor who has closed a seed round." },
-  { problem: "Find investors who fit your stage", mentor: "Book a mentor who backs early teams." },
-  { problem: "Grow when growth has stalled", mentor: "Book a mentor who has fixed it before." },
-  { problem: "Make your first great hire", mentor: "Book a mentor who built a team from zero." },
-  { problem: "Price your product", mentor: "Book a mentor who tested pricing and got it right." },
-  { problem: "Fix your pitch deck", mentor: "Book a mentor who has pitched and won." },
-  { problem: "Sell to big companies", mentor: "Book a mentor who has closed an enterprise deal." },
-  { problem: "Find product-market fit", mentor: "Book a mentor who found it after months of nobody caring." },
-  { problem: "Launch in a new country", mentor: "Book a mentor who has expanded abroad." },
-  { problem: "Get your first 1,000 users", mentor: "Book a mentor who did it with no budget." },
-  { problem: "Manage a team for the first time", mentor: "Book a mentor who learned it the hard way." },
-  { problem: "Split equity with a co-founder", mentor: "Book a mentor who has done it fairly." },
-  { problem: "Handle burnout and loneliness", mentor: "Book a mentor who has been through it." },
-  { problem: "Know when to pivot", mentor: "Book a mentor who changed direction and made it work." },
+export const marquee = [
+  "Practical advice",
+  "First-hand experience",
+  "Specific challenges",
+  "No generic playbooks",
+  "Experience over titles",
+  "Relevance over reach",
+] as const;
+
+export const markets = [
+  "Founders in India",
+  "Global → India",
+  "India → GCC, UK",
+] as const;
+
+export const problemUsual = [
+  "Scroll LinkedIn for a warm-ish intro",
+  "Ask in a founder group chat and hope",
+  "Read one more generic playbook",
+] as const;
+
+export const problemNeeded = [
+  "Someone who has faced this exact challenge",
+  "What worked, what didn’t, and why",
+  "Advice for the decision in front of you, not in general",
+] as const;
+
+export const challenges = [
+  {
+    stage: "Starting out",
+    question: "Is this idea worth pursuing? How do I validate it before investing too much?",
+    tint: "butter" as const,
+    icon: "bulb" as const,
+    photo: "/photos/leah.jpg",
+    name: "Leah K.",
+    experience: "Validated 3 ideas before building",
+    finds: "Someone who’s tested early ideas in your market and can tell you what signal actually matters — before you invest months.",
+  },
+  {
+    stage: "Building your product",
+    question: "What should our MVP include, and what can we leave out?",
+    tint: "lavender" as const,
+    icon: "sprout" as const,
+    photo: "/photos/ken.jpg",
+    name: "Ken A.",
+    experience: "Shipped MVPs for 2 B2B products",
+    finds: "Someone who’s cut scope the hard way — and can help you ship the smallest version that still learns something real.",
+  },
+  {
+    stage: "Finding customers",
+    question: "We’ve built the product. How do we get our first 100 customers?",
+    tint: "peach" as const,
+    icon: "target" as const,
+    photo: "/photos/meera.jpg",
+    name: "Meera S.",
+    experience: "Got first 100 without paid ads",
+    finds: "Someone who’s landed early customers in a similar stage and can share which channels actually moved, not theory.",
+  },
+  {
+    stage: "Pricing",
+    question: "How should we price our product for the Indian market?",
+    tint: "sky" as const,
+    icon: "book" as const,
+    photo: "/photos/nora.jpg",
+    name: "Nora V.",
+    experience: "Priced SaaS for India — twice",
+    finds: "Someone who’s priced for India before — what buyers pushed back on, what stuck, and how they’d set it today.",
+  },
+  {
+    stage: "Growing your business",
+    question: "Our current sales channel isn’t working. What should we try next?",
+    tint: "lime" as const,
+    icon: "group" as const,
+    photo: "/photos/james.jpg",
+    name: "James P.",
+    experience: "Rebuilt a stalled sales channel",
+    finds: "Someone who’s fixed a broken growth motion and can tell you what to stop, what to try next, and why.",
+  },
+  {
+    stage: "Expanding into new markets",
+    question: "We’re considering the GCC. What do we need to know before entering?",
+    tint: "mist" as const,
+    icon: "search" as const,
+    photo: "/photos/omar.jpg",
+    name: "Omar H.",
+    experience: "Entered GCC from India",
+    finds: "Someone who’s expanded India → GCC and can warn you about the decisions that look obvious until you’re in-market.",
+  },
+] as const;
+
+export const advisors = [
+  { photo: "/photos/meera.jpg", name: "Meera S.", role: "Priced SaaS for India" },
+  { photo: "/photos/omar.jpg", name: "Omar H.", role: "Entered GCC from India" },
+  { photo: "/photos/nora.jpg", name: "Nora V.", role: "First 100 customers" },
+  { photo: "/photos/james.jpg", name: "James P.", role: "Rebuilt a sales channel" },
+  { photo: "/photos/aisha.jpg", name: "Aisha M.", role: "Hired an early team" },
+  { photo: "/photos/priya.jpg", name: "Daniel R.", role: "Closed enterprise deals" },
+] as const;
+
+export const howItWorks = [
+  {
+    step: 1,
+    title: "Tell us what you’re working through",
+    body: "Describe the specific business challenge, decision, or roadblock you need help with. Not sure where to start? Book a discovery call.",
+  },
+  {
+    step: 2,
+    title: "Find relevant, vetted experience",
+    body: "We carefully review the experience and professional backgrounds of advisors on Thirdline, helping you connect with individuals who have genuine, relevant experience for the challenge you’re facing.",
+  },
+  {
+    step: 3,
+    title: "Get practical, actionable advice",
+    body: "Book a call with the right person, learn what worked and what didn’t, and decide your next move.",
+  },
+] as const;
+
+export const whyContrasts = [
+  {
+    not: "Not another directory.",
+    instead: "Start with the challenge you need to solve, rather than scrolling through profiles.",
+  },
+  {
+    not: "Not just theory.",
+    instead: "Learn from people who’ve made real decisions and experienced the outcomes.",
+  },
+  {
+    not: "Not guesswork.",
+    instead: "Find someone whose experience relates to your situation, so you can make a more informed next move.",
+  },
+] as const;
+
+export const whyPrinciples = [
+  {
+    lead: "Experience",
+    over: "titles",
+    body: "What someone’s done beats where they work.",
+  },
+  {
+    lead: "Relevance",
+    over: "reach",
+    body: "The right person for this problem — not the biggest network.",
+  },
+  {
+    lead: "Specific",
+    over: "generic",
+    body: "Advice from someone who’s faced a similar challenge.",
+  },
+  {
+    lead: "Fit",
+    over: "familiar",
+    body: "Who you ask next needn’t be who you asked last.",
+  },
+  {
+    lead: "Outcomes",
+    over: "talk",
+    body: "A clearer decision. Then move.",
+  },
+] as const;
+
+export const expertPoints = [
+  "Share what actually worked — and what didn’t",
+  "Help with the challenges you know first-hand",
+  "Contribute when a relevant question comes up — no ongoing commitment",
+] as const;
+
+export const faqs = [
+  {
+    question: "What kind of people are on Thirdline?",
+    answer:
+      "People with first-hand experience — founders, operators, and industry experts who’ve worked through the challenges you’re facing. We care about what they’ve done, not just job titles.",
+  },
+  {
+    question: "How do I know if someone is right for me?",
+    answer:
+      "Start with the challenge, not a profile. We match you with relevant experience for the decision in front of you — similar stage, market, and problem — so the conversation is useful from the first minute.",
+  },
+  {
+    question: "Is this like coaching or mentoring?",
+    answer:
+      "No. Thirdline isn’t an ongoing mentor relationship. It’s practical advice for a specific decision — what worked, what didn’t, and what to try next — then you move forward.",
+  },
+  {
+    question: "Do I need a subscription?",
+    answer:
+      "No subscription. You connect when you have a real challenge to work through. The waitlist is open now; we’ll share how booking works as we launch.",
+  },
+  {
+    question: "Who is Thirdline for?",
+    answer:
+      "Founders and operators making concrete decisions — especially across India, the UK, and the GCC — who want advice from someone who’s already been through a similar situation.",
+  },
 ] as const;
 
 export type SceneVisual =

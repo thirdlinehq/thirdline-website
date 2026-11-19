@@ -52,21 +52,31 @@ export function WaitlistProvider({ children }: { children: ReactNode }) {
     setStatus("submitting");
     setError("");
     try {
-      // Netlify Forms only accepts posts to a static file; `next dev` can't serve that, so dev saves locally.
-      const res =
-        process.env.NODE_ENV === "development"
-          ? await fetch("/api/waitlist", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(Object.fromEntries(data)),
-            })
-          : await fetch("/__forms.html", {
+      const payload = Object.fromEntries(data.entries()) as Record<string, string>;
+
+      // API: thank-you email (+ local log in dev).
+      const apiPromise = fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      // Netlify Forms only works from the browser on the deployed site — not via a server fetch.
+      const netlifyPromise =
+        process.env.NODE_ENV === "production"
+          ? fetch("/__forms.html", {
               method: "POST",
               headers: { "Content-Type": "application/x-www-form-urlencoded" },
-              body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
-            });
-      const body = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(body.error ?? "Something went wrong. Please try again.");
+              body: new URLSearchParams({ "form-name": "waitlist", ...payload }).toString(),
+            }).catch((err) => {
+              console.error("[waitlist] Netlify Forms post failed", err);
+              return null;
+            })
+          : Promise.resolve(null);
+
+      const [apiRes] = await Promise.all([apiPromise, netlifyPromise]);
+      const body = await apiRes.json().catch(() => ({}));
+      if (!apiRes.ok) throw new Error(body.error ?? "Something went wrong. Please try again.");
       setStatus("success");
       form.reset();
     } catch (err) {
@@ -90,7 +100,7 @@ export function WaitlistProvider({ children }: { children: ReactNode }) {
             <div>
               <p className="text-[13px] font-medium text-leaf">Waitlist open · Beta</p>
               <h2 id="waitlist-title" className="mt-1.5 font-display text-3xl font-bold">
-                {isFounder ? "Join as a founder" : "Join as a mentor"}
+                {isFounder ? "Find someone who’s been there" : "I can help others"}
               </h2>
             </div>
             <button
@@ -105,22 +115,27 @@ export function WaitlistProvider({ children }: { children: ReactNode }) {
             </button>
           </div>
 
-          <div role="tablist" aria-label="I am a" className="mt-5 grid grid-cols-2 rounded-full bg-mist p-1 text-sm">
-            {(["founder", "mentor"] as const).map((r) => (
+          <div role="tablist" aria-label="I want to" className="mt-5 grid grid-cols-2 rounded-full bg-mist p-1 text-sm">
+            {(
+              [
+                { id: "founder" as const, label: "Need advice" },
+                { id: "mentor" as const, label: "Can help" },
+              ] as const
+            ).map((r) => (
               <button
-                key={r}
+                key={r.id}
                 type="button"
                 role="tab"
-                aria-selected={role === r}
+                aria-selected={role === r.id}
                 onClick={() => {
-                  setRole(r);
+                  setRole(r.id);
                   setStatus("idle");
                 }}
-                className={`rounded-full px-4 py-2 font-medium capitalize transition ${
-                  role === r ? "bg-ink text-white" : "text-muted hover:text-ink"
+                className={`rounded-full px-4 py-2 font-medium transition ${
+                  role === r.id ? "bg-ink text-white" : "text-muted hover:text-ink"
                 }`}
               >
-                {r}
+                {r.label}
               </button>
             ))}
           </div>
@@ -131,8 +146,8 @@ export function WaitlistProvider({ children }: { children: ReactNode }) {
               <p className="mt-4 font-display text-2xl font-bold">You&apos;ve joined the waitlist.</p>
               <p className="mt-2 text-[15px] leading-relaxed text-muted">
                 {isFounder
-                  ? "We'll email you when Beta opens, so you can book your first mentor."
-                  : "We'll email you when Beta opens, so you can set your availability."}
+                  ? "We’ll email you when access opens, so you can find the right experience for your next decision."
+                  : "We’ll email you when access opens, so you can share relevant experience with founders who need it."}
               </p>
               <button
                 type="button"
@@ -153,9 +168,13 @@ export function WaitlistProvider({ children }: { children: ReactNode }) {
               <Field label="Name" name="name" autoComplete="name" required />
               <Field label="Email" name="email" type="email" autoComplete="email" required />
               <Field
-                label={isFounder ? "What are you stuck on?" : "What have you solved?"}
+                label={isFounder ? "What challenge are you working through?" : "What experience can you share?"}
                 name="topic"
-                placeholder={isFounder ? "Closing our first 10 customers" : "Closed a seed round in 2024"}
+                placeholder={
+                  isFounder
+                    ? "Pricing for the Indian market"
+                    : "Expanded a product from India into the GCC"
+                }
               />
               {status === "error" && (
                 <p role="alert" className="text-sm font-medium text-ink">
@@ -169,7 +188,7 @@ export function WaitlistProvider({ children }: { children: ReactNode }) {
               >
                 {status === "submitting" ? "Joining…" : "Join the waitlist"}
               </button>
-              <p className="text-[13px] text-muted">Beta access for founders and mentors.</p>
+              <p className="text-[13px] text-muted">Coming soon. Waitlist open.</p>
             </form>
           )}
         </div>
