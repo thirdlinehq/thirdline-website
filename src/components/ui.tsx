@@ -39,7 +39,7 @@ export function Logo({
     <span className={`inline-flex items-center ${size === "lg" ? "gap-3" : "gap-2.5"} ${className}`}>
       <LogoMark variant={variant} className={size === "lg" ? "h-11 w-11" : "h-8 w-8"} />
       <span
-        className={`font-display font-extrabold leading-none ${text} ${size === "lg" ? "text-3xl" : "text-[22px]"}`}
+        className={`font-display font-bold leading-none tracking-tight ${text} ${size === "lg" ? "text-3xl" : "text-[22px]"}`}
       >
         Thirdline
       </span>

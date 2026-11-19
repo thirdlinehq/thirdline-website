@@ -1,43 +1,41 @@
-import { BookingInfographic } from "@/components/booking-infographic";
-import { HeroArt } from "@/components/hero-art";
-import { HeroInfographic } from "@/components/hero-infographic";
-import { ProductVideo } from "@/components/product-video";
-import {
-  Arrow,
-  Eyebrow,
-  Highlight,
-  IconTile,
-  Logo,
-  LogoMark,
-  Portrait,
-  Section,
-  Tag,
-  people,
-  type Tint,
-} from "@/components/ui";
+import { AdvisorCarousel } from "@/components/advisor-carousel";
+import { AloneScroll } from "@/components/alone-scroll";
+import { HeroSearch } from "@/components/hero-product";
+import { HeroVideo } from "@/components/hero-video";
+import { PaintScroll } from "@/components/paint-scroll";
+import { Reveal } from "@/components/reveal";
+import { SiteHeader } from "@/components/site-header";
+import { Arrow, Logo } from "@/components/ui";
 import { WaitlistButton, WaitlistProvider } from "@/components/waitlist";
-import { examples, video } from "@/lib/content";
+import { FaqSection } from "@/components/faq-section";
+import { WhySection } from "@/components/why-section";
+import {
+  challenges,
+  expertPoints,
+  howItWorks,
+  marquee,
+  markets,
+  problemNeeded,
+  problemUsual,
+} from "@/lib/content";
 
-const nav = [
-  { href: "#problem", label: "Problem" },
-  { href: "#video", label: "Watch" },
-  { href: "#how-it-works", label: "How it works" },
-  { href: "#who", label: "Who it's for" },
-  { href: "#examples", label: "Examples" },
-];
+const faces = ["/photos/meera.jpg", "/photos/omar.jpg", "/photos/nora.jpg", "/photos/aisha.jpg"];
 
 export default function Home() {
   return (
     <WaitlistProvider>
-      <Header />
+      <SiteHeader />
       <main className="flex-1">
         <Hero />
+        <Marquee />
+        <Advisors />
         <Problem />
-        <Thesis />
-        <ProductProblem />
         <HowItWorks />
-        <WhoItsFor />
-        <Examples />
+        <AloneScroll />
+        <PaintScroll />
+        <WhySection />
+        <Experts />
+        <FaqSection />
         <FinalCta />
       </main>
       <Footer />
@@ -45,320 +43,340 @@ export default function Home() {
   );
 }
 
-function Header() {
+function Hero() {
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-5 sm:px-8">
-        <a href="#top" aria-label="Thirdline home">
-          <Logo />
-        </a>
-        <nav aria-label="Primary" className="hidden items-center gap-7 text-sm font-medium text-muted md:flex">
-          {nav.map((item) => (
-            <a key={item.href} href={item.href} className="transition hover:text-ink">
-              {item.label}
+    <section id="top" className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-ink px-5 pb-28 pt-28 text-center text-white">
+      <HeroVideo />
+      <div className="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/25 to-ink/70" />
+      <div className="relative mx-auto w-full max-w-4xl">
+        <div className="flex animate-fade-up items-center justify-center gap-3">
+          <div className="flex -space-x-2">
+            {faces.map((src) => (
+              <img key={src} src={src} alt="" className="h-9 w-9 rounded-full object-cover ring-2 ring-white/80" />
+            ))}
+          </div>
+          <p className="text-left text-sm leading-snug text-white/90">
+            {markets[0]}
+            <span className="block text-white/70">
+              {markets[1]} · {markets[2]}
+            </span>
+          </p>
+        </div>
+
+        <p className="mt-8 animate-fade-up text-[13px] font-semibold uppercase tracking-[0.18em] text-lime [animation-delay:0.12s]">
+          Advice when you need it
+        </p>
+        <h1 className="mx-auto mt-4 max-w-3xl animate-fade-up font-display text-5xl font-semibold leading-[1.08] tracking-tight text-white [animation-delay:0.22s] sm:text-6xl lg:text-7xl">
+          You have a problem.
+          <span className="mt-1 block">Someone has solved it.</span>
+        </h1>
+        <p className="mx-auto mt-5 max-w-xl animate-fade-up text-lg leading-relaxed text-white/80 [animation-delay:0.34s]">
+          Get practical advice from people who have overcome the challenge you’re dealing with. Find the
+          right experience for the decision in front of you, and move forward with greater clarity.
+        </p>
+
+        <div className="mt-8 animate-fade-up [animation-delay:0.46s]">
+          <HeroSearch />
+        </div>
+
+        <div className="mt-6 flex animate-fade-up flex-wrap items-center justify-center gap-2 [animation-delay:0.58s]">
+          {challenges.slice(0, 4).map((item) => (
+            <a
+              key={item.stage}
+              href="#advisors"
+              className="rounded-full border border-white/30 bg-white/10 px-3.5 py-1.5 text-sm text-white backdrop-blur-sm transition hover:bg-white/20"
+            >
+              {item.stage}
             </a>
           ))}
-        </nav>
-        <WaitlistButton role="founder" variant="secondary" size="sm">
-          Join the waitlist
-        </WaitlistButton>
+        </div>
+
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <WaitlistButton role="mentor" variant="outline-light" size="sm">
+            I can help others
+          </WaitlistButton>
+        </div>
       </div>
-    </header>
+    </section>
   );
 }
 
-function Hero() {
+function Marquee() {
+  const values = [...marquee, ...marquee];
+  const questions = [...challenges, ...challenges].map((item) => item.question);
   return (
-    <section id="top" className="overflow-x-clip px-5 pb-20 pt-12 sm:px-8 sm:pb-28 sm:pt-16">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
-          <div>
-            <div className="flex animate-fade-up flex-wrap gap-2">
-              <Tag tint="mist">Coming soon</Tag>
-              <Tag tint="lime">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inset-0 rounded-full bg-ink animate-ring" />
-                  <span className="relative h-1.5 w-1.5 rounded-full bg-ink" />
-                </span>
-                Waitlist open
-              </Tag>
-              <Tag tint="lavender">Beta</Tag>
-            </div>
-            <h1 className="mt-6 font-display text-[44px] font-extrabold leading-[1.04] sm:text-6xl lg:text-[68px]">
-              <span className="block animate-fade-up [animation-delay:0.1s]">Stuck as a founder?</span>
-              <span className="block animate-fade-up [animation-delay:0.25s]">
-                <Highlight sweep className="whitespace-nowrap">
-                  Book a mentor
-                </Highlight>{" "}
-                who has solved it.
-              </span>
-            </h1>
-            <p className="mt-6 max-w-[34rem] animate-fade-up text-lg leading-relaxed text-muted [animation-delay:0.4s]">
-              Pick a mentor who has done exactly what you&apos;re trying to do. Book a 1:1 call and get
-              unstuck.
-            </p>
-            <div className="mt-8 flex animate-fade-up flex-col gap-3 [animation-delay:0.55s] sm:flex-row">
-              <WaitlistButton role="founder" className="group">
-                Join the waitlist as a founder
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  <Arrow />
-                </span>
-              </WaitlistButton>
-              <WaitlistButton role="mentor" variant="outline">
-                Join as a mentor
-              </WaitlistButton>
-            </div>
-            <p className="mt-5 animate-fade-up text-[13px] font-medium text-muted [animation-delay:0.7s]">
-              Waitlist is open. Beta access for founders and mentors.
-            </p>
-          </div>
-          <HeroArt />
+    <div className="border-b border-line bg-white">
+      <div className="marquee-fade overflow-hidden border-b border-line py-4" aria-hidden>
+        <div className="marquee-track flex w-max items-center gap-3 whitespace-nowrap">
+          {questions.map((question, i) => (
+            <span
+              key={`${question}-${i}`}
+              className="rounded-full border border-line bg-mist px-4 py-2 text-sm font-medium text-ink"
+            >
+              {question}
+            </span>
+          ))}
         </div>
+      </div>
+      <div className="marquee-fade overflow-hidden py-4" aria-hidden>
+        <div className="marquee-track-reverse flex w-max items-center gap-10 whitespace-nowrap">
+          {values.map((item, i) => (
+            <span key={`${item}-${i}`} className="inline-flex items-center gap-10 text-sm font-medium tracking-wide text-muted">
+              {item}
+              <span className="h-1.5 w-1.5 rounded-full bg-lime" />
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
-        <div className="mt-16 sm:mt-20">
-          <HeroInfographic />
-        </div>
+function Advisors() {
+  return (
+    <section id="advisors" className="scroll-mt-24 px-5 py-20 sm:px-8 sm:py-28">
+      <div className="mx-auto max-w-6xl">
+        <Reveal className="max-w-3xl">
+          <p className="text-[13px] font-semibold uppercase tracking-[0.16em] text-leaf">The solution</p>
+          <h2 className="mt-3 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+            Real questions. Real experience.
+          </h2>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
+            Whatever stage you’re at, there’s a challenge worth solving. From your first business idea to your
+            next growth milestone, Thirdline helps you find people who have been through challenges similar to
+            yours.
+          </p>
+        </Reveal>
+
+        <Reveal className="mt-12" delay={100}>
+          <AdvisorCarousel />
+        </Reveal>
+
+        <Reveal className="mt-12 flex flex-col items-start gap-4 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between" delay={80}>
+          <p className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+            Sound familiar? Start with the challenge in front of you.
+          </p>
+          <WaitlistButton role="founder" variant="secondary">
+            Find someone who’s been there <Arrow />
+          </WaitlistButton>
+        </Reveal>
       </div>
     </section>
   );
 }
 
 function Problem() {
-  const bottlenecks: { label: string; tint: Tint }[] = [
-    { label: "Sales", tint: "peach" },
-    { label: "Fundraising", tint: "lavender" },
-    { label: "Hiring", tint: "butter" },
-    { label: "Pricing", tint: "sky" },
-  ];
   return (
-    <Section id="problem">
-      <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-16">
-        <div>
-          <Eyebrow>The problem</Eyebrow>
-          <h2 className="mt-4 font-display text-4xl font-bold leading-[1.08] sm:text-5xl">
-            You don&apos;t need more advice from everyone. You need one person who has done it.
+    <section id="problem" className="scroll-mt-24 bg-mist">
+      <div className="mx-auto grid max-w-6xl items-end gap-10 px-5 pt-20 sm:px-8 lg:grid-cols-12 lg:pt-28">
+        <Reveal className="lg:col-span-7">
+          <p className="text-[13px] font-semibold uppercase tracking-[0.16em] text-leaf">The problem</p>
+          <h2 className="mt-3 font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+            Generic advice is easy to find. Relevant experience is not.
           </h2>
-          <p className="mt-6 max-w-[34rem] text-lg leading-relaxed text-muted">
-            Founders get stuck on one thing: sales, fundraising, hiring, pricing. Most advice is generic,
-            and networking takes weeks.
+        </Reveal>
+        <Reveal className="lg:col-span-5" delay={100}>
+          <p className="text-lg leading-relaxed text-muted">
+            When a real decision lands on your desk — pricing, market entry, a first enterprise deal — the usual
+            routes fall short. What moves a founder forward is talking to someone who has already been through
+            that specific challenge, in that specific market.
           </p>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div className="rounded-2xl bg-mist p-6">
-            <p className="font-display text-lg font-bold">What founders get</p>
-            <ul className="mt-5 space-y-3 text-[15px] text-muted">
-              {["Generic advice from everyone", "Threads, articles, AI answers", "Weeks of cold networking"].map(
-                (item) => (
-                  <li key={item} className="flex gap-2.5">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-muted/60" />
-                    <span className="line-through decoration-muted/50">{item}</span>
-                  </li>
-                ),
-              )}
-            </ul>
-          </div>
-          <div className="rounded-2xl bg-ink p-6 text-white">
-            <p className="font-display text-lg font-bold text-lime">What they need</p>
-            <div className="mt-5 flex items-center gap-3">
-              <Portrait {...people.anika} className="h-12 w-12" />
-              <div>
-                <p className="font-semibold">One person</p>
-                <p className="text-sm text-white/70">who has solved it</p>
-              </div>
-            </div>
-            <div className="mt-5 flex flex-wrap gap-1.5">
-              {bottlenecks.map((b) => (
-                <Tag key={b.label} tint={b.tint}>
-                  {b.label}
-                </Tag>
-              ))}
-            </div>
-          </div>
-        </div>
+        </Reveal>
       </div>
-    </Section>
-  );
-}
 
-function Thesis() {
-  return (
-    <section className="px-5 sm:px-8">
-      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-2xl bg-ink px-6 py-16 text-white sm:px-14 sm:py-20">
-        <svg
-          viewBox="0 0 400 200"
-          className="pointer-events-none absolute -bottom-6 -right-6 hidden w-[26rem] lg:block"
-          aria-hidden
-        >
-          <path d="M40 190 C 110 30, 290 30, 360 190" fill="none" stroke="var(--color-lime)" strokeWidth="1.5" />
-          <path d="M110 190 C 160 90, 240 90, 290 190" fill="none" stroke="var(--color-leaf)" strokeWidth="1.5" />
-          <circle cx="40" cy="190" r="6" fill="var(--color-lime)" />
-          <circle cx="360" cy="190" r="6" fill="var(--color-lime)" />
-          <circle cx="200" cy="70" r="4" fill="var(--color-lime)" />
-        </svg>
-        <div className="relative flex items-center gap-3">
-          <LogoMark variant="inverse" className="h-9 w-9" />
-          <p className="text-[13px] font-medium text-lime">Our thesis</p>
-        </div>
-        <blockquote className="relative mt-6 max-w-4xl font-display text-3xl font-bold leading-[1.15] sm:text-5xl">
-          People don&apos;t need more networking. They need the <span className="text-lime">right person</span>{" "}
-          with the exact knowledge to solve the bottleneck.
-        </blockquote>
+      <Reveal media className="mx-auto mt-12 max-w-6xl overflow-hidden px-5 sm:px-8" delay={80}>
+        <img
+          src="/photos/team.jpg"
+          alt=""
+          className="aspect-[21/9] w-full object-cover object-center sm:aspect-[2.4/1]"
+        />
+      </Reveal>
+
+      <div className="mx-auto grid max-w-6xl gap-0 px-5 py-16 sm:px-8 lg:grid-cols-2 lg:py-20">
+        <Reveal className="border-b border-line py-8 lg:border-b-0 lg:border-r lg:pr-12">
+          <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-muted">The usual routes</p>
+          <ul className="mt-6 space-y-4">
+            {problemUsual.map((item) => (
+              <li key={item} className="flex gap-3 text-lg leading-snug text-muted">
+                <span className="mt-2 h-px w-5 shrink-0 bg-muted/50" aria-hidden />
+                <span className="line-through decoration-muted/40">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+        <Reveal className="py-8 lg:pl-12" delay={120}>
+          <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-leaf">What the moment calls for</p>
+          <ul className="mt-6 space-y-4">
+            {problemNeeded.map((item) => (
+              <li key={item} className="flex gap-3 text-lg leading-snug text-ink">
+                <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-lime" aria-hidden />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
-  );
-}
-
-function ProductProblem() {
-  return (
-    <Section id="video">
-      <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end">
-        <div>
-          <Eyebrow>The product problem</Eyebrow>
-          <h2 className="mt-4 font-display text-4xl font-bold sm:text-5xl">See why founders stay stuck</h2>
-        </div>
-        <p className="max-w-[34rem] text-lg leading-relaxed text-muted">
-          {video.title}. The bottleneck a founder faces, why generic advice and cold networking fail, and
-          what changes with one mentor.
-        </p>
-      </div>
-      <div className="mt-10">
-        <ProductVideo />
-      </div>
-    </Section>
   );
 }
 
 function HowItWorks() {
   return (
-    <Section id="how-it-works" className="bg-mist">
-      <div className="max-w-2xl">
-        <Eyebrow>How it works</Eyebrow>
-        <h2 className="mt-4 font-display text-4xl font-bold leading-[1.08] sm:text-5xl">
-          Pick a mentor. Book a time. Get unstuck.
-        </h2>
-      </div>
-      <div className="mt-12">
-        <BookingInfographic />
-      </div>
-    </Section>
-  );
-}
-
-function WhoItsFor() {
-  return (
-    <Section id="who">
-      <div className="max-w-2xl">
-        <Eyebrow>Who it&apos;s for</Eyebrow>
-        <h2 className="mt-4 flex flex-wrap items-center gap-3 font-display text-4xl font-bold sm:text-5xl">
-          Founders and mentors
-          <Tag tint="lavender">Beta</Tag>
-        </h2>
-      </div>
-      <div className="mt-12 grid gap-5 md:grid-cols-2">
-        <article className="flex flex-col rounded-2xl bg-mist p-8 sm:p-10">
-          <div className="flex -space-x-2">
-            <Portrait {...people.founder} className="h-14 w-14" />
-            <Portrait {...people.sara} className="h-14 w-14" />
-          </div>
-          <h3 className="mt-6 font-display text-3xl font-bold">If you are a founder</h3>
-          <p className="mt-3 max-w-[30rem] flex-1 text-lg leading-relaxed text-muted">
-            You&apos;re stuck on one thing and don&apos;t have time for generic advice. Book a 1:1 with a
-            mentor who has solved it.
-          </p>
-          <div className="mt-8">
-            <WaitlistButton role="founder" variant="secondary">
-              Join as a founder <Arrow />
-            </WaitlistButton>
-          </div>
-        </article>
-        <article className="flex flex-col rounded-2xl bg-ink p-8 text-white sm:p-10">
-          <div className="flex -space-x-2">
-            <Portrait {...people.anika} className="h-14 w-14" />
-            <Portrait {...people.rohan} className="h-14 w-14" />
-          </div>
-          <h3 className="mt-6 font-display text-3xl font-bold">If you are a mentor</h3>
-          <p className="mt-3 max-w-[30rem] flex-1 text-lg leading-relaxed text-white/75">
-            You&apos;ve already solved it. Share what you know, set your availability, and take 1:1 calls with
-            founders who are stuck on the same thing.
-          </p>
-          <div className="mt-8">
-            <WaitlistButton role="mentor" variant="inverse">
-              Join as a mentor <Arrow />
-            </WaitlistButton>
-          </div>
-        </article>
-      </div>
-    </Section>
-  );
-}
-
-const exampleIcons = [
-  "target", "sprout", "group", "sprout", "group", "target", "book", "chat",
-  "bulb", "search", "group", "group", "chat", "chat", "bulb",
-] as const;
-const exampleTints: Tint[] = ["lavender", "butter", "peach", "sky"];
-
-function Examples() {
-  return (
-    <Section id="examples" className="bg-mist">
-      <div className="max-w-3xl">
-        <Eyebrow>Examples</Eyebrow>
-        <h2 className="mt-4 font-display text-4xl font-bold leading-[1.08] sm:text-5xl">
-          If you are a founder and you don&apos;t know how to…
-        </h2>
-      </div>
-      <ul className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {examples.map((ex, i) => (
-          <li key={ex.problem} className="flex gap-4 rounded-2xl bg-white p-5 ring-1 ring-line transition hover:ring-ink">
-            <IconTile name={exampleIcons[i]} tint={exampleTints[i % exampleTints.length]} />
-            <div>
-              <h3 className="font-display text-xl font-bold leading-tight">{ex.problem}</h3>
-              <p className="mt-1.5 text-[15px] leading-snug text-muted">{ex.mentor}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </Section>
-  );
-}
-
-function FinalCta() {
-  return (
-    <section className="px-5 py-20 sm:px-8 sm:py-28">
-      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-2xl bg-ink px-6 py-16 text-white sm:px-14 sm:py-20">
-        <svg viewBox="0 0 400 200" className="pointer-events-none absolute -right-10 -top-10 hidden w-[24rem] lg:block" aria-hidden>
-          <path d="M20 180 C 100 10, 300 10, 380 180" fill="none" stroke="var(--color-leaf)" strokeWidth="1.5" />
-          <circle cx="200" cy="52" r="5" fill="var(--color-lime)" />
-          <circle cx="20" cy="180" r="5" fill="var(--color-leaf)" />
-        </svg>
-        <div className="relative max-w-3xl">
-          <p className="text-[13px] font-medium text-lime">Coming soon. Waitlist open.</p>
-          <h2 className="mt-4 font-display text-4xl font-extrabold leading-[1.05] sm:text-6xl">
-            Your bottleneck has an answer. <span className="text-lime">Book the mentor who has it.</span>
+    <section id="how-it-works" className="scroll-mt-24 px-5 py-20 sm:px-8 sm:py-28">
+      <div className="mx-auto max-w-6xl">
+        <Reveal className="max-w-3xl">
+          <p className="text-[13px] font-semibold uppercase tracking-[0.16em] text-leaf">How it works</p>
+          <h2 className="mt-3 font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl">
+            Three steps. No long-term mentor, no browsing profiles — just the right experience for the
+            decision in front of you.
           </h2>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <WaitlistButton role="founder">
-              Join as a founder <Arrow />
-            </WaitlistButton>
-            <WaitlistButton role="mentor" variant="outline-light">
-              Join as a mentor
-            </WaitlistButton>
-          </div>
-          <p className="mt-5 text-[13px] font-medium text-white/70">Beta access for founders and mentors.</p>
-        </div>
+        </Reveal>
+        <ol className="mt-16 grid gap-0 border-t border-line md:grid-cols-3">
+          {howItWorks.map((item, index) => (
+            <Reveal
+              as="li"
+              key={item.step}
+              delay={index * 120}
+              className={`border-b border-line py-10 md:border-b-0 md:px-8 md:py-12 ${
+                index === 0 ? "md:pl-0" : "md:border-l"
+              } ${index === howItWorks.length - 1 ? "md:pr-0" : ""}`}
+            >
+              <span className="font-display text-5xl font-semibold tracking-tight text-lime">{item.step}</span>
+              <h3 className="mt-5 text-xl font-semibold tracking-tight">{item.title}</h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-muted">{item.body}</p>
+            </Reveal>
+          ))}
+        </ol>
       </div>
     </section>
   );
 }
 
+function Experts() {
+  return (
+    <section id="experts" className="scroll-mt-24 bg-mist px-5 py-20 sm:px-8 sm:py-28">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-12">
+        <Reveal media className="overflow-hidden lg:col-span-6">
+          <img src="/photos/call.jpg" alt="" className="aspect-[4/5] w-full object-cover sm:aspect-[5/4]" />
+        </Reveal>
+        <Reveal className="lg:col-span-5 lg:col-start-8" delay={140}>
+          <p className="text-[13px] font-semibold uppercase tracking-[0.16em] text-leaf">For people who have been there</p>
+          <h2 className="mt-3 font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl">
+            You’ve been there. Someone needs that.
+          </h2>
+          <p className="mt-5 text-lg leading-relaxed text-muted">
+            If you’ve built, priced, hired, launched, or expanded — especially across India, UK or the GCC —
+            your experience could save another founder months of wrong turns. Founders, operators, and
+            industry experts are all welcome.
+          </p>
+          <ul className="mt-8 space-y-4">
+            {expertPoints.map((item) => (
+              <li key={item} className="flex gap-3 text-[15px] leading-relaxed text-ink">
+                <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-lime" aria-hidden />
+                {item}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-10">
+            <WaitlistButton role="mentor" variant="secondary">
+              I can help others <Arrow />
+            </WaitlistButton>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function FinalCta() {
+  return (
+    <section className="relative overflow-hidden bg-white px-5 py-28 text-center sm:px-8">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(166,226,75,0.18),transparent_58%)]" />
+      <Reveal className="relative">
+        <p className="text-[13px] font-semibold uppercase tracking-[0.16em] text-leaf">Coming soon. Waitlist open.</p>
+        <h2 className="mx-auto mt-4 max-w-3xl font-display text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+          Find someone who’s been there.
+        </h2>
+        <p className="mx-auto mt-5 max-w-xl text-lg text-muted">
+          Describe the challenge in front of you. We’ll help you find someone who has already worked through
+          it.
+        </p>
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <WaitlistButton role="founder" variant="secondary">
+            Find someone who’s been there <Arrow />
+          </WaitlistButton>
+          <WaitlistButton role="mentor" variant="outline">
+            I can help others
+          </WaitlistButton>
+        </div>
+      </Reveal>
+    </section>
+  );
+}
+
+const footerColumns = [
+  {
+    title: "Product",
+    links: [
+      { href: "#advisors", label: "Experience" },
+      { href: "#problem", label: "Problem" },
+      { href: "#how-it-works", label: "How it works" },
+      { href: "#why", label: "Why Thirdline" },
+      { href: "#faq", label: "FAQ" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { href: "#alone", label: "Stop deciding alone" },
+      { href: "#experts", label: "For experts" },
+      { href: "#top", label: "Advice when you need it" },
+    ],
+  },
+] as const;
+
 function Footer() {
   return (
-    <footer className="border-t border-line px-5 py-10 sm:px-8">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
-        <Logo />
-        <p className="font-display text-lg font-bold text-ink">It&apos;s a deal.</p>
+    <footer className="bg-ink px-5 pb-8 pt-16 text-white sm:px-8">
+      <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-12">
+        <div className="lg:col-span-6">
+          <Logo variant="inverse" />
+          <h2 className="mt-8 max-w-md font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
+            Don’t miss the next step.
+          </h2>
+          <p className="mt-4 max-w-md text-lg leading-relaxed text-white/70">
+            The waitlist is open. Tell us the decision in front of you, and we’ll help you find someone who’s
+            already worked through it.
+          </p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <WaitlistButton role="founder" variant="primary">
+              Find someone who’s been there
+            </WaitlistButton>
+            <WaitlistButton role="mentor" variant="outline-light">
+              I can help others
+            </WaitlistButton>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-8 sm:pt-16 lg:col-span-5 lg:col-start-8">
+          {footerColumns.map((column) => (
+            <div key={column.title}>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/50">{column.title}</p>
+              <ul className="mt-4 space-y-3">
+                {column.links.map((link) => (
+                  <li key={link.href}>
+                    <a href={link.href} className="text-sm text-white/85 transition hover:text-lime">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="mx-auto mt-14 flex max-w-6xl flex-col gap-2 border-t border-white/15 pt-6 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
         <p>© {new Date().getFullYear()} Thirdline</p>
+        <p>The right experience beats the loudest opinion.</p>
       </div>
     </footer>
   );

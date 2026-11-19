@@ -14,8 +14,9 @@
   --color-peach: #fbd9cc;
   --color-sky: #cfe3f7;
 
-  --font-sans: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
-  --font-display: var(--font-bricolage), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-poppins), "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-poppins), "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-poppins), "Helvetica Neue", Arial, sans-serif;
 
   --animate-float: float 6s ease-in-out infinite;
   --animate-draw: draw 2.4s ease-out forwards;
@@ -96,12 +97,170 @@
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(18px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+.hero-zoom {
+  animation: kenburns 22s ease-out both;
+}
+
+@keyframes card-kenburns {
+  0% {
+    transform: scale(1) translate(0%, 0%);
+  }
+  40% {
+    transform: scale(1.14) translate(-2.5%, -1.5%);
+  }
+  100% {
+    transform: scale(1.06) translate(1.5%, 1%);
+  }
+}
+
+.card-kenburns {
+  animation: card-kenburns 16s ease-in-out infinite alternate;
+}
+
+.card-kenburns-active {
+  animation: card-kenburns 9s ease-in-out infinite alternate;
+}
+
+@keyframes md-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.65em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes md-letter-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.07em);
+  }
+}
+
+@keyframes md-word-in {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(0.55em);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes md-word-glow {
+  0%,
+  100% {
+    opacity: 0.88;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes md-line-scrub {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  30%,
+  70% {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}
+
+@keyframes md-tag-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes md-ghost-drift {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.06;
+  }
+  50% {
+    transform: translateY(-3%) scale(1.03);
+    opacity: 0.1;
+  }
+}
+
+@keyframes card-orb-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(6%, 4%) scale(1.08);
+  }
+}
+
+.md-letter {
+  display: inline-block;
+  animation: md-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both,
+    md-letter-float 3.6s ease-in-out infinite;
+}
+
+.md-word {
+  display: inline-block;
+  animation: md-word-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both,
+    md-word-glow 3.8s ease-in-out infinite;
+}
+
+.md-tag {
+  animation: md-tag-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.md-scrub {
+  animation: md-line-scrub 4.8s ease-in-out infinite;
+}
+
+.md-ghost {
+  animation: md-ghost-drift 7s ease-in-out infinite;
+}
+
+.card-orb {
+  animation: card-orb-drift 14s ease-in-out infinite;
+}
+
+.card-orb-active {
+  animation: card-orb-drift 8s ease-in-out infinite;
 }
 
 @keyframes tick {
@@ -110,8 +269,147 @@
   }
 }
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes caret {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+
+.marquee-track-reverse {
+  animation: marquee-reverse 48s linear infinite;
+}
+
+.marquee-fade {
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.animate-caret {
+  animation: caret 0.9s steps(1) infinite;
+}
+
+@keyframes soft-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes search {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.animate-soft-in {
+  animation: soft-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-search {
+  animation: search 1.35s ease-in-out infinite;
+}
+
+@media (scripting: enabled) {
+  .reveal:not(.is-in),
+  .reveal-media:not(.is-in) {
+    opacity: 0;
+  }
+
+  .reveal:not(.is-in) {
+    transform: translateY(22px);
+  }
+
+  .reveal-media:not(.is-in) {
+    transform: scale(1.05);
+  }
+}
+
+.reveal.is-in {
+  animation: fade-up 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reveal-media.is-in {
+  animation: reveal-media 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes reveal-media {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .marquee-track-reverse,
+  .animate-soft-in,
+  .animate-search,
+  .animate-caret,
+  .hero-zoom,
+  .card-kenburns,
+  .card-kenburns-active,
+  .md-letter,
+  .md-word,
+  .md-tag,
+  .md-scrub,
+  .md-ghost,
+  .card-orb,
+  .card-orb-active,
+  .reveal,
+  .reveal-media {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
 @utility font-display {
   font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+@utility font-serif {
+  font-family: var(--font-serif), Georgia, serif;
   letter-spacing: -0.02em;
 }
 
