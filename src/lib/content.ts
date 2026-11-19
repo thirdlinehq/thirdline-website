@@ -1,5 +1,23 @@
 export type WaitlistRole = "founder" | "mentor";
 
+export const examples = [
+  { problem: "Crack sales", mentor: "Book a mentor who landed their first 50 customers." },
+  { problem: "Raise your first round", mentor: "Book a mentor who has closed a seed round." },
+  { problem: "Find investors who fit your stage", mentor: "Book a mentor who backs early teams." },
+  { problem: "Grow when growth has stalled", mentor: "Book a mentor who has fixed it before." },
+  { problem: "Make your first great hire", mentor: "Book a mentor who built a team from zero." },
+  { problem: "Price your product", mentor: "Book a mentor who tested pricing and got it right." },
+  { problem: "Fix your pitch deck", mentor: "Book a mentor who has pitched and won." },
+  { problem: "Sell to big companies", mentor: "Book a mentor who has closed an enterprise deal." },
+  { problem: "Find product-market fit", mentor: "Book a mentor who found it after months of nobody caring." },
+  { problem: "Launch in a new country", mentor: "Book a mentor who has expanded abroad." },
+  { problem: "Get your first 1,000 users", mentor: "Book a mentor who did it with no budget." },
+  { problem: "Manage a team for the first time", mentor: "Book a mentor who learned it the hard way." },
+  { problem: "Split equity with a co-founder", mentor: "Book a mentor who has done it fairly." },
+  { problem: "Handle burnout and loneliness", mentor: "Book a mentor who has been through it." },
+  { problem: "Know when to pivot", mentor: "Book a mentor who changed direction and made it work." },
+] as const;
+
 export const marquee = [
   "Practical advice",
   "First-hand experience",
